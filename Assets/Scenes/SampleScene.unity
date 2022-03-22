@@ -159,6 +159,7 @@ MonoBehaviour:
   intersection: {fileID: 34931284612901983, guid: bbb07a1bc86104e45b493679587c7e2a, type: 3}
   tile: {fileID: 1979809971704079122, guid: 792d99b95699f924e8a6cc040c2ff5ef, type: 3}
   door: {fileID: 1192238076724654490, guid: 3cfe7983c0798f641a2302e486ba3814, type: 3}
+  tileSize: 0.0047625
 --- !u!4 &276404019
 Transform:
   m_ObjectHideFlags: 0
