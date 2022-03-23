@@ -29,23 +29,25 @@ public class DungeonBuilder : MonoBehaviour
     [SerializeField]
     private float tileSize = 0.0047625f;
 
-    private int[][] map = new int[][]
-    {
-        new int[] { 9,9,9,9,9,9,9,9,9,9 },
-        new int[] { 9,1,1,1,1,1,1,1,1,9 },
-        new int[] { 9,1,1,1,1,1,1,1,1,9 },
-        new int[] { 9,1,1,1,1,1,1,1,1,9 },
-        new int[] { 9,9,9,9,8,9,9,9,9,9 },
-        new int[] { 0,9,1,1,1,1,9,0,0,0 },
-        new int[] { 0,9,1,1,1,1,9,0,0,0 },
-        new int[] { 0,9,1,1,1,1,9,0,0,0 },
-        new int[] { 0,9,1,1,1,1,9,0,0,0 },
-        new int[] { 0,9,9,9,9,9,9,0,0,0 }
-    };
+    private int[][] map;
 
     // Start is called before the first frame update
     void Start()
     {
+        map = new int[][]
+        {
+            new int[] { 9,9,9,9,9,9,9,9,9,9 },
+            new int[] { 9,1,1,1,1,1,1,1,1,9 },
+            new int[] { 9,1,1,1,1,1,1,1,1,9 },
+            new int[] { 9,1,1,1,1,1,1,1,1,9 },
+            new int[] { 9,9,9,9,8,9,9,9,9,9 },
+            new int[] { 0,9,1,1,1,1,9,0,0,0 },
+            new int[] { 0,9,1,1,1,1,9,0,0,0 },
+            new int[] { 0,9,1,1,1,1,9,0,0,0 },
+            new int[] { 0,9,1,1,1,1,9,0,0,0 },
+            new int[] { 0,9,9,9,9,9,9,0,0,0 }
+        };
+
         GameObject newTile;
         for (int i = 0; i < map.Length; i++)
         {
@@ -69,11 +71,15 @@ public class DungeonBuilder : MonoBehaviour
         }
     }
 
+    private bool wallNorth(int i, int j) => (i > 0 && map[i - 1][j] >= 8);
+    private bool wallSouth(int i, int j) => (i + 1 < map.Length && map[i + 1][j] >= 8);
+    private bool wallEast(int i, int j) => (j > 0 && map[i][j - 1] >= 8);
+    private bool wallWest(int i, int j) => (j + 1 < map[i].Length && map[i][j + 1] >= 8);
+
     private void placeTile(int i, int j)
     {
-        GameObject newTile = null;
-
-        newTile = Instantiate(tile, this.transform);
+        GameObject newTile = Instantiate(tile, transform);
+        newTile.transform.Rotate(0, UnityEngine.Random.Range(0, 4) * 90, 0); // randomly rotating it so that it's harder to see the tiling.
 
         setPositionAndScale(newTile, i, j);
     }
@@ -95,11 +101,6 @@ public class DungeonBuilder : MonoBehaviour
 
         setPositionAndScale(newDoor, i, j);
     }
-
-    private bool wallNorth(int i, int j) => (i > 0 && map[i - 1][j] >= 8);
-    private bool wallSouth(int i, int j) => (i + 1 < map.Length && map[i + 1][j] >= 8);
-    private bool wallEast(int i, int j) => (j > 0 && map[i][j - 1] >= 8);
-    private bool wallWest(int i, int j) => (j + 1 < map[i].Length && map[i][j + 1] >= 8);
 
     private void setPositionAndScale(GameObject newTile, int i, int j)
     {
