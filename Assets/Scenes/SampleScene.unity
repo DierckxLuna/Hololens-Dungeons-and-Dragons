@@ -159,7 +159,7 @@ MonoBehaviour:
   intersection: {fileID: 34931284612901983, guid: bbb07a1bc86104e45b493679587c7e2a, type: 3}
   tile: {fileID: 1979809971704079122, guid: 792d99b95699f924e8a6cc040c2ff5ef, type: 3}
   door: {fileID: 1192238076724654490, guid: 3cfe7983c0798f641a2302e486ba3814, type: 3}
-  tileSize: 0.0047625
+  tileSize: 0.047625
 --- !u!4 &276404019
 Transform:
   m_ObjectHideFlags: 0
@@ -614,6 +614,36 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!1 &1949222084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1949222085}
+  m_Layer: 0
+  m_Name: Banner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1949222085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949222084}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.022842407, y: 0.2645054, z: -1.262913}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1990799261
 GameObject:
   m_ObjectHideFlags: 0
