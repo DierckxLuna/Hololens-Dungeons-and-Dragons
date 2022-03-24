@@ -35,6 +35,8 @@ namespace Assets.Scripts.DungeonBuilding
 
         private void Start()
         {
+            activateEditButton(inDecoratingMode.Value);
+
             for (int i = 0; i < decorationPrefabs.Count; i++)
             {
                 decorations.Add(Instantiate(decorationPrefabs[i], this.transform));
