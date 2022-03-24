@@ -17,13 +17,11 @@ namespace Assets.Scripts.DungeonBuilding
         [SerializeField]
         private List<GameObject> decorationPrefabs;
 
-        public List<GameObject> decorations = new List<GameObject>();
+        protected List<GameObject> decorations = new List<GameObject>();
 
-        private Interactable interactible;
+        protected int activeDecoration = 0;
 
-        private int activeDecoration = 0;
-
-        private void Awake()
+        protected virtual void Awake()
         {
             if (editButton == null)
             {
@@ -33,7 +31,7 @@ namespace Assets.Scripts.DungeonBuilding
             inDecoratingMode.OnChange += activateEditButton;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             activateEditButton(inDecoratingMode.Value);
 
@@ -43,14 +41,10 @@ namespace Assets.Scripts.DungeonBuilding
                 decorations[i].SetActive(false);
             }
 
-            decorations[activeDecoration].SetActive(true);
-
-            interactible = editButton.GetComponent<Interactable>();
-
-            interactible.OnClick.AddListener(this.ChangeDecoration);
+            editButton.GetComponent<Interactable>().OnClick.AddListener(ChangeDecoration);
         }
 
-        private void ChangeDecoration()
+        public void ChangeDecoration()
         {
             decorations[activeDecoration].SetActive(false);
             activeDecoration = activeDecoration + 1 < decorations.Count ? activeDecoration + 1 : 0;

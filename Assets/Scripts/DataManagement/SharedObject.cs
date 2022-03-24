@@ -17,7 +17,6 @@ namespace Assets.Scripts.DataManagement
 
         private void RaiseEvent(T value)
         {
-            Debug.Log($"Raising events");
             _object = value;
 
             if (OnChange != null)
