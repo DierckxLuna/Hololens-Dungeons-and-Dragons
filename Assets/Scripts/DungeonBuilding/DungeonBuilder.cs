@@ -39,7 +39,7 @@ namespace Assets.Scripts.DungeonBuilding
         {
             if (Instance == null) Instance = this;
 
-            inDecoratingMode.Value = true;
+            inDecoratingMode.Value = false;
 
             Map = new int[][]
             {
@@ -74,6 +74,8 @@ namespace Assets.Scripts.DungeonBuilding
                 }
             }
         }
+
+        public void ToggleDecoratingMode() => inDecoratingMode.Value = !inDecoratingMode.Value;
 
         private bool wallNorth(int i, int j) => (i > 0 && Map[i - 1][j] >= 8);
         private bool wallSouth(int i, int j) => (i + 1 < Map.Length && Map[i + 1][j] >= 8);

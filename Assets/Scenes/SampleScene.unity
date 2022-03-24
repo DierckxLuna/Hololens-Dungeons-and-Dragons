@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657755, g: 0.4964127, b: 0.57481825, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -157,14 +157,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479ee86a202b4f84b861bcdd3816aa42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wall: {fileID: 6584180110181100376, guid: b701dd2002bd9954a938c6d43b28659f, type: 3}
+  walls:
+  - {fileID: 6584180110181100376, guid: b701dd2002bd9954a938c6d43b28659f, type: 3}
+  - {fileID: 6584180110181100376, guid: 0af48145fe6de7d4a9cb76aff94bde49, type: 3}
+  - {fileID: 6584180110181100376, guid: c3ad29db2e1dd854a83641b90dca1449, type: 3}
+  - {fileID: 6584180110181100376, guid: 2d2d160553427af41b0532132ab8c02f, type: 3}
   tWall: {fileID: 1111501038543476026, guid: 04c8fc6182955fd4a927165b37e2ecdd, type: 3}
-  halfWall: {fileID: 3777391944564571753, guid: 42998b5be8908434c91a21a8ca65090d, type: 3}
   corner: {fileID: 5735774869955770838, guid: a34d5c91a8b20ef4ab028bec3d421859, type: 3}
   intersection: {fileID: 34931284612901983, guid: bbb07a1bc86104e45b493679587c7e2a, type: 3}
-  tile: {fileID: 1979809971704079122, guid: 792d99b95699f924e8a6cc040c2ff5ef, type: 3}
+  tiles:
+  - {fileID: 1979809971704079122, guid: d4e91743bba1c934fb2aa14e96c5dbb6, type: 3}
+  - {fileID: 1979809971704079122, guid: 85aa5092c14120345b2ee0075b04e4fe, type: 3}
+  - {fileID: 1979809971704079122, guid: 21dc4020178750d448926e1c3b6c6744, type: 3}
   door: {fileID: 1192238076724654490, guid: 3cfe7983c0798f641a2302e486ba3814, type: 3}
   tileSize: 0.047625
+  inDecoratingMode: {fileID: 11400000, guid: ea18731495ae6ff4ab44e28d51d9d18f, type: 2}
 --- !u!4 &276404019
 Transform:
   m_ObjectHideFlags: 0
@@ -463,6 +470,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2483093654602221341, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 276404018}
+    - target: {fileID: 2483093654602221341, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleDecoratingMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483093654602221341, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Assets.Scripts.DungeonBuilding.DungeonBuilder, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2565462926983481018, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -479,6 +498,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3387837265659659143, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: iconQuadTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 2e264b2035e178e4dac9e40cfcf38662, type: 3}
     - target: {fileID: 3515418990045158255, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
       propertyPath: m_Name
       value: Menu
@@ -507,13 +530,25 @@ PrefabInstance:
       propertyPath: iconQuadTexture
       value: 
       objectReference: {fileID: 2800000, guid: b7ebc1af93ceaba48aed1e572edc6a58, type: 3}
+    - target: {fileID: 4987367188409559486, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: m_Name
+      value: DecoratingMode
+      objectReference: {fileID: 0}
     - target: {fileID: 4987367188862318640, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4987367188862318670, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: m_text
+      value: Decorations
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987367188862318670, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
       propertyPath: m_textAlignment
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987367188862318670, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 4987367188862318670, guid: 40b588bd40632eb41a0af374d91c4fc9, type: 3}
       propertyPath: m_VerticalAlignment
@@ -855,13 +890,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690839504}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!1 &1742341895
 GameObject:
   m_ObjectHideFlags: 0
