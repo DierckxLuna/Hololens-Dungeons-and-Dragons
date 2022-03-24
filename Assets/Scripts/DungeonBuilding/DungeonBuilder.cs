@@ -1,20 +1,18 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.DataManagement;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.DungeonBuilding
 {
     public class DungeonBuilder : MonoBehaviour
     {
+        public static DungeonBuilder Instance;
+
         [SerializeField]
         List<GameObject> walls;
 
         [SerializeField]
         GameObject tWall;
-
-        [SerializeField]
-        GameObject halfWall;
 
         [SerializeField]
         GameObject corner;
@@ -31,12 +29,19 @@ namespace Assets.Scripts
         [SerializeField]
         private float tileSize = 0.0047625f;
 
-        private int[][] map;
+        [SerializeField]
+        private SharedBool inDecoratingMode;
+
+        public int[][] Map; // TODO: replace this with array of the gameobjects
 
         // Start is called before the first frame update
         void Start()
         {
-            map = new int[][]
+            if (Instance == null) Instance = this;
+
+            inDecoratingMode.Value = true;
+
+            Map = new int[][]
             {
             new int[] { 9,9,9,9,9,9,9,9,9,9 },
             new int[] { 9,1,1,1,1,1,1,1,1,9 },
@@ -50,22 +55,19 @@ namespace Assets.Scripts
             new int[] { 0,9,9,9,9,9,9,0,0,0 }
             };
 
-            GameObject newTile;
-            for (int i = 0; i < map.Length; i++)
+            for (int i = 0; i < Map.Length; i++)
             {
-                for (int j = 0; j < map[i].Length; j++)
+                for (int j = 0; j < Map[i].Length; j++)
                 {
-                    newTile = null;
-
-                    if (map[i][j] == 1)
+                    if (Map[i][j] == 1)
                     {
                         placeTile(i, j);
                     }
-                    else if (map[i][j] == 8)
+                    else if (Map[i][j] == 8)
                     {
                         placeDoor(i, j);
                     }
-                    else if (map[i][j] == 9)
+                    else if (Map[i][j] == 9)
                     {
                         placeWall(i, j);
                     }
@@ -73,10 +75,10 @@ namespace Assets.Scripts
             }
         }
 
-        private bool wallNorth(int i, int j) => (i > 0 && map[i - 1][j] >= 8);
-        private bool wallSouth(int i, int j) => (i + 1 < map.Length && map[i + 1][j] >= 8);
-        private bool wallEast(int i, int j) => (j > 0 && map[i][j - 1] >= 8);
-        private bool wallWest(int i, int j) => (j + 1 < map[i].Length && map[i][j + 1] >= 8);
+        private bool wallNorth(int i, int j) => (i > 0 && Map[i - 1][j] >= 8);
+        private bool wallSouth(int i, int j) => (i + 1 < Map.Length && Map[i + 1][j] >= 8);
+        private bool wallEast(int i, int j) => (j > 0 && Map[i][j - 1] >= 8);
+        private bool wallWest(int i, int j) => (j + 1 < Map[i].Length && Map[i][j + 1] >= 8);
 
         private void placeTile(int i, int j)
         {
@@ -183,21 +185,21 @@ namespace Assets.Scripts
             {
                 if (east)
                 {
-                    newWall = Instantiate(halfWall, this.transform);
+                    newWall = Instantiate(walls.GetRandom(), this.transform);
                 }
                 else if (north)
                 {
-                    newWall = Instantiate(halfWall, this.transform);
+                    newWall = Instantiate(walls.GetRandom(), this.transform);
                     newWall.transform.Rotate(0, 90, 0);
                 }
                 else if (west)
                 {
-                    newWall = Instantiate(halfWall, this.transform);
+                    newWall = Instantiate(walls.GetRandom(), this.transform);
                     newWall.transform.Rotate(0, 180, 0);
                 }
                 else
                 {
-                    newWall = Instantiate(halfWall, this.transform);
+                    newWall = Instantiate(walls.GetRandom(), this.transform);
                     newWall.transform.Rotate(0, 270, 0);
                 }
             }
