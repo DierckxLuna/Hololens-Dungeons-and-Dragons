@@ -36,7 +36,10 @@ public class ValueCalc : MonoBehaviour
                 break;
             case 8:
                 orientation = d8Val();
-                break;          
+                break;  
+            case 12: 
+                orientation = d12Val();
+                break;        
         }
 
         if(logToConsole && orientation > 0 && lastLogged != orientation){
@@ -172,6 +175,131 @@ public class ValueCalc : MonoBehaviour
             {
                 orientation = 6;
             } 
+        }
+
+        return orientation;
+    }
+
+    int d12Val()
+    {
+        float angleX = gameObject.transform.rotation.eulerAngles.x;
+        float angleZ = gameObject.transform.rotation.eulerAngles.z;
+
+        int orientation = 0;
+
+        if(FuzzyBounds(angleZ, 0))
+        {
+            if(FuzzyBounds(angleX, 329))
+            {
+                orientation = 2;
+            }
+            else if(FuzzyBounds(angleX, 211))
+            {
+                orientation = 4;
+            }
+            else if(FuzzyBounds(angleX, 31))
+            {
+                orientation = 9;
+            }
+            else if(FuzzyBounds(angleX, 148))
+            {
+                orientation = 11;
+            }
+        }
+        else if(FuzzyBounds(angleZ, 90))
+        {
+            if(FuzzyBounds(angleX, 58))
+            {
+                orientation = 1;
+            }
+            else if(FuzzyBounds(angleX, 302))
+            {
+                orientation = 10;
+            }
+            else if(FuzzyBounds(angleX, 238))
+            {
+                orientation = 12;
+            }
+            else if(FuzzyBounds(angleX, 121))
+            {
+                orientation = 3;
+            }
+        }
+        else if(FuzzyBounds(angleZ, 180))
+        {
+            if(FuzzyBounds(angleX, 211))
+            {
+                orientation = 2;
+            }
+            else if(FuzzyBounds(angleX, 329))
+            {
+                orientation = 4;
+            }
+            else if(FuzzyBounds(angleX, 31))
+            {
+                orientation = 11;
+            }
+            else if(FuzzyBounds(angleX, 148))
+            {
+                orientation = 9;
+            }
+        }
+        else if(FuzzyBounds(angleZ, 270))
+        {
+            if(FuzzyBounds(angleX, 58))
+            {
+                orientation = 3;
+            }
+            else if(FuzzyBounds(angleX, 302))
+            {
+                orientation = 12;
+            }
+            else if(FuzzyBounds(angleX, 238))
+            {
+                orientation = 10;
+            }
+            else if(FuzzyBounds(angleX, 121))
+            {
+                orientation = 1;
+            }
+        }
+        else if(FuzzyBounds(angleX, 0))
+        {
+            if(FuzzyBounds(angleZ, 58))
+            {
+                orientation = 5;
+            }
+            else if(FuzzyBounds(angleZ, 302))
+            {
+                orientation = 6;
+            }
+            else if(FuzzyBounds(angleZ, 238))
+            {
+                orientation = 8;
+            }
+            else if(FuzzyBounds(angleZ, 121))
+            {
+                orientation = 7;
+            }
+        }
+        else if(FuzzyBounds(angleX, 180))
+        {
+            if(FuzzyBounds(angleZ, 58))
+            {
+                orientation = 8;
+            }
+            else if(FuzzyBounds(angleZ, 302))
+            {
+                orientation = 7;
+            }
+            else if(FuzzyBounds(angleZ, 238))
+            {
+                orientation = 5;
+            }
+            else if(FuzzyBounds(angleZ, 121))
+            {
+                orientation = 6;
+            }
         }
 
         return orientation;
