@@ -27,10 +27,13 @@ namespace Assets.Scripts.DungeonBuilding
         GameObject door;
 
         [SerializeField]
-        private float tileSize = 0.0047625f;
+        private float tileSize = 0.047625f;
 
         [SerializeField]
         private SharedBool inDecoratingMode;
+
+        [SerializeField]
+        private SharedBool inRotatingMode;
 
         public int[][] Map; // TODO: replace this with array of the gameobjects
 
@@ -75,7 +78,17 @@ namespace Assets.Scripts.DungeonBuilding
             }
         }
 
-        public void ToggleDecoratingMode() => inDecoratingMode.Value = !inDecoratingMode.Value;
+        public void ToggleDecoratingMode()
+        {
+            inDecoratingMode.Value = !inDecoratingMode.Value;
+            inRotatingMode.Value = false;
+        }
+
+        public void ToggleRotatingMode()
+        {
+            inRotatingMode.Value = !inRotatingMode.Value;
+            inDecoratingMode.Value = false;
+        }
 
         private bool wallNorth(int i, int j) => (i > 0 && Map[i - 1][j] >= 8);
         private bool wallSouth(int i, int j) => (i + 1 < Map.Length && Map[i + 1][j] >= 8);
