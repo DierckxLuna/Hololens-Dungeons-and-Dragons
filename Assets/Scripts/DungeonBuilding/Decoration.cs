@@ -44,6 +44,8 @@ namespace Assets.Scripts.DungeonBuilding
             editButton.GetComponent<Interactable>().OnClick.AddListener(ChangeDecoration);
         }
 
+        public bool Empty => this.activeDecoration == 0;
+
         public void ChangeDecoration()
         {
             decorations[activeDecoration].SetActive(false);
