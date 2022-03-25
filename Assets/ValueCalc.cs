@@ -7,10 +7,12 @@ public class ValueCalc : MonoBehaviour
     public bool logToConsole;
     public int dieType;
 
+    int lastLogged;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        lastLogged = -1;
     }
 
     // Update is called once per frame
@@ -24,9 +26,11 @@ public class ValueCalc : MonoBehaviour
 
         int orientation = 0;
 
-
         switch(dieType)
         {
+            case 4:
+                orientation = d4Val();
+                break;
             case 6:
                 orientation = d6Val();
                 break;
@@ -35,8 +39,9 @@ public class ValueCalc : MonoBehaviour
                 break;          
         }
 
-        if(logToConsole){
+        if(logToConsole && orientation > 0 && lastLogged != orientation){
             Debug.Log(gameObject.name + ": " + orientation);
+            lastLogged = orientation;
         }        
     }
 
@@ -54,6 +59,35 @@ public class ValueCalc : MonoBehaviour
         }
         return angle >= lowerBound && angle <= upperBound;
 
+    }
+
+    int d4Val()
+    {
+        float angleX = gameObject.transform.rotation.eulerAngles.x;
+        float angleZ = gameObject.transform.rotation.eulerAngles.z;
+
+        float angleXZ = (angleX + angleZ) % 360;
+
+        int orientation = 0;
+
+        if(FuzzyBounds(angleXZ, 0))
+        {
+            orientation = 1;
+        }
+        else if(FuzzyBounds(angleXZ, 109) || FuzzyBounds(angleXZ, 250))
+        {
+            orientation = 4;
+        } 
+        else if(FuzzyBounds(angleXZ, 140) || FuzzyBounds(angleXZ, 83))
+        {
+            orientation = 3;
+        } 
+        else if(FuzzyBounds(angleXZ, 218) || FuzzyBounds(angleXZ, 275))
+        {
+            orientation = 2;
+        } 
+
+        return orientation;
     }
 
     int d6Val()
