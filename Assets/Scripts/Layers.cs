@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Assets.Scripts
 {
     public static class Layers
@@ -22,5 +18,9 @@ namespace Assets.Scripts
         public const int ThumbTipMask = 128;
         public const int Palm = 8;
         public const int PalmMask = 256;
+        public const int Dungeon = 9;
+        public const int DungeonMask = 512;
+        public const int EditButton = 10;
+        public const int EditButtonMask = 1024;
     }
 }

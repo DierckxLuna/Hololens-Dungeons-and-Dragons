@@ -113,11 +113,13 @@ namespace Assets.Scripts.DungeonBuilding
                         placeEmpty(i, j);
                     }
 
-                    GameObject button = Instantiate(editButtonPrefab);
+                    EditButton button = Instantiate(editButtonPrefab).GetComponent<EditButton>();
 
                     if (button != null)
                     {
-                        button.GetComponentInChildren<Interactable>().OnClick.AddListener(() => PlaceTile(i, j));
+                        EditButton editButton = button.GetComponent<EditButton>();
+                        editButton.I = i;
+                        editButton.J = j;
 
                         button.transform.position = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
                     }

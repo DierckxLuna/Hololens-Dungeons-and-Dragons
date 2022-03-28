@@ -1,44 +1,28 @@
 ﻿using Assets.Scripts.DataManagement;
-using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 
 namespace Assets.Scripts.DungeonBuilding
 {
     public class EditButton : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject button;
-
-        [SerializeField]
-        private SharedBool inEditMode;
-
-        [SerializeField]
-        private SharedString iconName;
-
-        private ButtonConfigHelper configHelper;
-
         public int I;
 
         public int J;
 
+        [SerializeField]
+        private SharedBool inEditingMode;
+
         private void Start()
         {
-            inEditMode.OnChange += enableButton;
-            iconName.OnChange += updateIcon;
-            configHelper = button.GetComponent<ButtonConfigHelper>();
-            enableButton(inEditMode.Value);
+            inEditingMode.OnChange += toggleBoxCollider;
         }
 
-        private void OnDestroy()
+        private void toggleBoxCollider(bool val) => this.gameObject.SetActive(val);
+
+        private void OnCollisionEnter(Collision collision)
         {
-            inEditMode.OnChange -= enableButton;
-            iconName.OnChange -= updateIcon;
+            Debug.Log($"Something's touching me {collision.gameObject.name}");
+            DungeonBuilder.Instance.PlaceTile(I, J);
         }
-
-
-
-        private void enableButton(bool val) => button.SetActive(val);
-
-        private void updateIcon(string val) => configHelper.SetQuadIconByName(val);
     }
 }
