@@ -91,12 +91,12 @@ namespace Assets.Scripts.DungeonBuilding
                 if (north || south)
                 {
                     normalWall.SetActive(true);
-                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
                 }
                 else if (east || west)
                 {
                     normalWall.SetActive(true);
-                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
                 }
             }
             else if (neighBours == 2)
@@ -137,19 +137,19 @@ namespace Assets.Scripts.DungeonBuilding
 
                 if (!west)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                    splitWall.transform.eulerAngles = new Vector3(0, 270, 0);
                 }
                 else if (!north)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, -90, 0);
+                    splitWall.transform.eulerAngles = new Vector3(0, 0, 0);
                 }
                 else if (!east)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, -180, 0);
+                    splitWall.transform.eulerAngles = new Vector3(0, 90, 0);
                 }
                 else if (!south)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, -270, 0);
+                    splitWall.transform.eulerAngles = new Vector3(0, 180, 0);
                 }
             }
             else

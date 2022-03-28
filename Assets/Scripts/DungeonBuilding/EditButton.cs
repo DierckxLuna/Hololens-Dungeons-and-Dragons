@@ -15,14 +15,17 @@ namespace Assets.Scripts.DungeonBuilding
         private void Start()
         {
             inEditingMode.OnChange += toggleBoxCollider;
+            toggleBoxCollider(inEditingMode.Value);
         }
 
         private void toggleBoxCollider(bool val) => this.gameObject.SetActive(val);
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider collision)
         {
-            Debug.Log($"Something's touching me {collision.gameObject.name}");
-            DungeonBuilder.Instance.PlaceTile(I, J);
+            if (collision.name == "indexTip")
+            {
+                DungeonBuilder.Instance.PlaceTile(I, J);
+            }
         }
     }
 }

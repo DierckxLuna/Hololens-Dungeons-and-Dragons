@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4426013854991608363}
   - component: {fileID: 4350499278250546815}
   - component: {fileID: 1254114945297892775}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EditButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,11 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eac9801c00b90c42b2832d7b07f16ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  inEditMode: {fileID: 11400000, guid: 9bfb1470c0a407d4ab2343718809b60c, type: 2}
-  iconName: {fileID: 11400000, guid: dce13249754f3c54aa17bdb5f60a97fd, type: 2}
   I: 0
   J: 0
+  inEditingMode: {fileID: 11400000, guid: 9bfb1470c0a407d4ab2343718809b60c, type: 2}
 --- !u!65 &1254114945297892775
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57,7 +55,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3031141406708783724}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

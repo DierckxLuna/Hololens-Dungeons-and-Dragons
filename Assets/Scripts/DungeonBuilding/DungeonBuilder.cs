@@ -45,6 +45,9 @@ namespace Assets.Scripts.DungeonBuilding
         private SharedString editIconName;
 
         [SerializeField]
+        private GameObject handTracker;
+
+        [SerializeField]
         public int MapSize = 50;
 
         private MapEditMode mapEditMode;
@@ -121,7 +124,7 @@ namespace Assets.Scripts.DungeonBuilding
                         editButton.I = i;
                         editButton.J = j;
 
-                        button.transform.position = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
+                        setPositionAndScale(button.gameObject, i, j);
                     }
                     else
                     {
@@ -165,6 +168,8 @@ namespace Assets.Scripts.DungeonBuilding
             {
                 GroundEditMode();
             }
+
+            handTracker.SetActive(inEditingMode.Value);
         }
 
         public void ExitEditMode()
@@ -200,24 +205,31 @@ namespace Assets.Scripts.DungeonBuilding
             Debug.Log($"Setting tile {i} {j}");
             if (mapEditMode == MapEditMode.none) return;
 
-            Destroy(Map[i][j].gameObject);
-
             Tile tile;
 
-            switch (mapEditMode)
+            if (mapEditMode == MapEditMode.wall && Map[i][j].GetType() != typeof(WallTile))
             {
-                case MapEditMode.wall:
-                    tile = placeWall(i, j);
-                    break;
-                case MapEditMode.ground:
-                    tile = placeGround(i, j);
-                    break;
-                case MapEditMode.door:
-                    tile = placeDoor(i, j);
-                    break;
-                default:
-                    tile = placeEmpty(i, j);
-                    break;
+                Destroy(Map[i][j].gameObject);
+                tile = placeWall(i, j);
+            }
+            else if (mapEditMode == MapEditMode.ground && Map[i][j].GetType() != typeof(GroundTile))
+            {
+                Destroy(Map[i][j].gameObject);
+                tile = placeGround(i, j);
+            }
+            else if (mapEditMode == MapEditMode.door && Map[i][j].GetType() != typeof(DoorTile))
+            {
+                Destroy(Map[i][j].gameObject);
+                tile = placeDoor(i, j);
+            }
+            else if (mapEditMode == MapEditMode.delete && Map[i][j].GetType() != typeof(EmptyTile))
+            {
+                Destroy(Map[i][j].gameObject);
+                tile = placeEmpty(i, j);
+            }
+            else
+            {
+                return;
             }
 
             UpdateNeighbours(i, j, tile);
