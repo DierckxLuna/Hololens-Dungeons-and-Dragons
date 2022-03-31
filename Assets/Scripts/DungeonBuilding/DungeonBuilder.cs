@@ -125,7 +125,7 @@ namespace Assets.Scripts.DungeonBuilding
                         editButton.J = j;
 
                         editButton.transform.position = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
-                        editButton.transform.localScale = new Vector3(tileSize * 0.75f, 0.01f, tileSize * 0.75f);
+                        editButton.transform.localScale = new Vector3(tileSize * 0.75f, 0.025f, tileSize * 0.75f);
                     }
                     else
                     {
