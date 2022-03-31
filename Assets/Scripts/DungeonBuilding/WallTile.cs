@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.DungeonBuilding
 {
-    public class WallTile : Tile
+    public class WallTile : MonoBehaviour, IWallJoinTile
     {
         [SerializeField]
         private GameObject lonelyWall;
@@ -22,7 +23,9 @@ namespace Assets.Scripts.DungeonBuilding
         [SerializeField]
         private GameObject intersectingWall;
 
-        private int previousWallNeighbours = 0;
+        private GameObject activeGameObject;
+
+        public bool IsNavigable => false;
 
         private void OnEnable()
         {
@@ -35,31 +38,87 @@ namespace Assets.Scripts.DungeonBuilding
             cornerWall.transform.localPosition = Vector3.zero;
 
             turnOffEverything();
-
-            setWall();
         }
 
-        public override void UpdateNeighbourInfo(Directions direction, Tile tile)
+        public void SetJoints(bool north, bool south, bool east, bool west)
         {
-            base.UpdateNeighbourInfo(direction, tile);
+            int neighBours = CountBools(north, south, east, west);
 
-            int currentWallNeighbours = getCurrentWallNeighbours();
-
-            if (previousWallNeighbours != currentWallNeighbours)
+            if (neighBours == 0)
             {
-                previousWallNeighbours = currentWallNeighbours;
-                setWall();
+                Activeate(this.lonelyWall);
             }
-        }
+            else if (neighBours == 1)
+            {
+                if (north || south)
+                {
+                    Activeate(normalWall);
+                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                }
+                else if (east || west)
+                {
+                    Activeate(normalWall);
+                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                }
+            }
+            else if (neighBours == 2)
+            {
+                if (north && south)
+                {
+                    Activeate(normalWall);
+                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                }
+                else if (east && west)
+                {
+                    Activeate(normalWall);
+                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                }
+                else if (west && north)
+                {
+                    Activeate(cornerWall);
+                    cornerWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                }
+                else if (north && east)
+                {
+                    Activeate(cornerWall);
+                    cornerWall.transform.eulerAngles = new Vector3(0, 180, 0);
+                }
+                else if (east && south)
+                {
+                    Activeate(cornerWall);
+                    cornerWall.transform.eulerAngles = new Vector3(0, 270, 0);
+                }
+                else
+                {
+                    Activeate(cornerWall);
+                    cornerWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                }
+            }
+            else if (neighBours == 3)
+            {
+                Activeate(splitWall);
 
-        private int getCurrentWallNeighbours()
-        {
-            int value = 0;
-            if (this.NorthNeighbour is WallTile || this.NorthNeighbour is DoorTile) value++;
-            if (this.SouthNeighbour is WallTile || this.SouthNeighbour is DoorTile) value++;
-            if (this.WestNeighbour is WallTile || this.WestNeighbour is DoorTile) value++;
-            if (this.EastNeighbour is WallTile || this.EastNeighbour is DoorTile) value++;
-            return value;
+                if (!west)
+                {
+                    splitWall.transform.eulerAngles = new Vector3(0, 180, 0);
+                }
+                else if (!north)
+                {
+                    splitWall.transform.eulerAngles = new Vector3(0, 270, 0);
+                }
+                else if (!east)
+                {
+                    splitWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                }
+                else if (!south)
+                {
+                    splitWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                }
+            }
+            else
+            {
+                Activeate(intersectingWall);
+            }
         }
 
         private void turnOffEverything()
@@ -71,91 +130,15 @@ namespace Assets.Scripts.DungeonBuilding
             intersectingWall.SetActive(false);
         }
 
-        private void setWall()
+        private void Activeate(GameObject gameObject)
         {
-            int neighBours = getCurrentWallNeighbours();
+            activeGameObject?.SetActive(false);
 
-            turnOffEverything();
+            activeGameObject = gameObject;
 
-            bool north = NorthNeighbour is WallTile || NorthNeighbour is DoorTile;
-            bool south = SouthNeighbour is WallTile || SouthNeighbour is DoorTile;
-            bool east = EastNeighbour is WallTile || EastNeighbour is DoorTile;
-            bool west = WestNeighbour is WallTile || WestNeighbour is DoorTile;
-
-            if (neighBours == 0)
-            {
-                this.lonelyWall.SetActive(true);
-            }
-            else if (neighBours == 1)
-            {
-                if (north || south)
-                {
-                    normalWall.SetActive(true);
-                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
-                }
-                else if (east || west)
-                {
-                    normalWall.SetActive(true);
-                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
-                }
-            }
-            else if (neighBours == 2)
-            {
-                if (north && south)
-                {
-                    normalWall.SetActive(true);
-                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
-                }
-                else if (east && west)
-                {
-                    normalWall.SetActive(true);
-                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
-                }
-                else if (west && north)
-                {
-                    cornerWall.SetActive(true);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 180, 0);
-                }
-                else if (north && east)
-                {
-                    cornerWall.SetActive(true);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 270, 0);
-                }
-                else if (east && south)
-                {
-                    cornerWall.SetActive(true);
-                }
-                else
-                {
-                    cornerWall.SetActive(true);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 90, 0);
-                }
-            }
-            else if (neighBours == 3)
-            {
-                splitWall.SetActive(true);
-
-                if (!west)
-                {
-                    splitWall.transform.eulerAngles = new Vector3(0, 270, 0);
-                }
-                else if (!north)
-                {
-                    splitWall.transform.eulerAngles = new Vector3(0, 0, 0);
-                }
-                else if (!east)
-                {
-                    splitWall.transform.eulerAngles = new Vector3(0, 90, 0);
-                }
-                else if (!south)
-                {
-                    splitWall.transform.eulerAngles = new Vector3(0, 180, 0);
-                }
-            }
-            else
-            {
-                intersectingWall.SetActive(true);
-            }
+            activeGameObject?.SetActive(true);
         }
+
+        private int CountBools(params bool[] args) => args.Count(t => t);
     }
 }

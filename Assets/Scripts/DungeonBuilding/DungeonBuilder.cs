@@ -9,7 +9,7 @@ namespace Assets.Scripts.DungeonBuilding
     {
         public static DungeonBuilder Instance;
 
-        public Tile[][] Map;
+        public ITile[][] Map;
 
         [SerializeField]
         private GameObject groundPrefab;
@@ -76,11 +76,11 @@ namespace Assets.Scripts.DungeonBuilding
 
             inEditingMode.Value = false;
 
-            Map = new Tile[50][];
+            Map = new ITile[50][];
 
             for (int i = 0; i < MapSize; i++)
             {
-                Map[i] = new Tile[50];
+                Map[i] = new ITile[50];
             }
 
             for (int i = 0; i < savedMap.Length; i++)
@@ -124,7 +124,8 @@ namespace Assets.Scripts.DungeonBuilding
                         editButton.I = i;
                         editButton.J = j;
 
-                        setPositionAndScale(button.gameObject, i, j);
+                        editButton.transform.position = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
+                        editButton.transform.localScale = new Vector3(tileSize * 0.75f, 0.01f, tileSize * 0.75f);
                     }
                     else
                     {
@@ -138,7 +139,7 @@ namespace Assets.Scripts.DungeonBuilding
             {
                 for (int j = 0; j < MapSize; j++)
                 {
-                    UpdateNeighbours(i, j, Map[i][j]);
+                    UpdateNeighbours(i, j);
                 }
             }
 
@@ -205,7 +206,7 @@ namespace Assets.Scripts.DungeonBuilding
             Debug.Log($"Setting tile {i} {j}");
             if (mapEditMode == MapEditMode.none) return;
 
-            Tile tile;
+            ITile tile;
 
             if (mapEditMode == MapEditMode.wall && Map[i][j].GetType() != typeof(WallTile))
             {
@@ -232,12 +233,12 @@ namespace Assets.Scripts.DungeonBuilding
                 return;
             }
 
-            UpdateNeighbours(i, j, tile);
+            UpdateNeighbours(i, j);
         }
 
-        private Tile placeGround(int i, int j)
+        private ITile placeGround(int i, int j)
         {
-            Tile newTile = Instantiate(groundPrefab, transform).GetComponent<Tile>();
+            ITile newTile = Instantiate(groundPrefab, transform).GetComponent<ITile>();
 
             Map[i][j] = newTile;
 
@@ -246,9 +247,9 @@ namespace Assets.Scripts.DungeonBuilding
             return newTile;
         }
 
-        private Tile placeDoor(int i, int j)
+        private ITile placeDoor(int i, int j)
         {
-            Tile newDoor = Instantiate(doorPrefab, transform).GetComponent<Tile>();
+            ITile newDoor = Instantiate(doorPrefab, transform).GetComponent<ITile>();
 
             Map[i][j] = newDoor;
 
@@ -257,9 +258,9 @@ namespace Assets.Scripts.DungeonBuilding
             return newDoor;
         }
 
-        private Tile placeWall(int i, int j, bool notInitial = true)
+        private ITile placeWall(int i, int j, bool notInitial = true)
         {
-            Tile newWall = Instantiate(wallPrefab, transform).GetComponent<Tile>();
+            ITile newWall = Instantiate(wallPrefab, transform).GetComponent<ITile>();
 
             Map[i][j] = newWall;
 
@@ -268,9 +269,9 @@ namespace Assets.Scripts.DungeonBuilding
             return newWall;
         }
 
-        private Tile placeEmpty(int i, int j, bool notInitial = true)
+        private ITile placeEmpty(int i, int j, bool notInitial = true)
         {
-            Tile newEmpty = Instantiate(emptyPrefab, transform).GetComponent<Tile>();
+            ITile newEmpty = Instantiate(emptyPrefab, transform).GetComponent<ITile>();
 
             Map[i][j] = newEmpty;
 
@@ -285,44 +286,45 @@ namespace Assets.Scripts.DungeonBuilding
             newTile.transform.localScale = new Vector3(tileSize, tileSize, tileSize);
         }
 
-        private void UpdateNeighbours(int i, int j, Tile tile)
+        private void UpdateNeighbours(int i, int j)
         {
             if (i > 0)
             {
-                tile.UpdateNeighbourInfo(Directions.West, Map[i - 1][j]);
-            }
-            else
-            {
-                tile.UpdateNeighbourInfo(Directions.West, Instantiate(emptyPrefab).GetComponent<Tile>());
+                UpdateTile(i - 1, j);
             }
 
             if (i < MapSize - 1)
             {
-                tile.UpdateNeighbourInfo(Directions.East, Map[i + 1][j]);
-            }
-            else
-            {
-                tile.UpdateNeighbourInfo(Directions.East, Instantiate(emptyPrefab).GetComponent<Tile>());
+                UpdateTile(i + 1, j);
             }
 
             if (j > 0)
             {
-                tile.UpdateNeighbourInfo(Directions.South, Map[i][j - 1]);
-            }
-            else
-            {
-                tile.UpdateNeighbourInfo(Directions.South, Instantiate(emptyPrefab).GetComponent<Tile>());
+                UpdateTile(i, j - 1);
             }
 
             if (j < MapSize - 1)
             {
-                tile.UpdateNeighbourInfo(Directions.North, Map[i][j + 1]);
+                UpdateTile(i, j + 1);
             }
-            else
+
+            UpdateTile(i, j);
+        }
+
+        private void UpdateTile(int i, int j)
+        {
+            if (Map[i][j] is IWallJoinTile tile)
             {
-                tile.UpdateNeighbourInfo(Directions.North, Instantiate(emptyPrefab).GetComponent<Tile>());
+                tile.SetJoints(
+                    north: isWallJoinTall(i - 1, j),
+                    south: isWallJoinTall(i + 1, j),
+                    east: isWallJoinTall(i, j + 1),
+                    west: isWallJoinTall(i, j - 1)
+                );
             }
         }
+
+        private bool isWallJoinTall(int i, int j) => i >= 0 && i < MapSize && j >= 0 && j < MapSize && Map[i][j] is IWallJoinTile;
     }
 
     public enum MapEditMode

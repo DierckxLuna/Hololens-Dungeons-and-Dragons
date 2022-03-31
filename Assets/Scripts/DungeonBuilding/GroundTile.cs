@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.DungeonBuilding
 {
-    public class GroundTile : Tile
+    public class GroundTile : MonoBehaviour, ITile
     {
         private Decoration decoration;
 
@@ -22,7 +22,7 @@ namespace Assets.Scripts.DungeonBuilding
             this.decoration = tile.GetComponent<Decoration>();
         }
 
-        public override bool IsNavigable
+        public bool IsNavigable
         {
             get {
                 return unit == null && this.decoration.Empty; // I don't want to deal with halflings technically being able to run between peoples legs if they're too tall but if I did it'd go here with a unit input.

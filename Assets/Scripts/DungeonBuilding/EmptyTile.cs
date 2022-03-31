@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.DungeonBuilding
 {
-    public class EmptyTile : Tile
+    public class EmptyTile : MonoBehaviour, ITile
     {
+        public bool IsNavigable => false;
     }
 }
