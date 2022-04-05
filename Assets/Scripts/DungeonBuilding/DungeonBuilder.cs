@@ -116,7 +116,7 @@ namespace Assets.Scripts.DungeonBuilding
                         placeEmpty(i, j);
                     }
 
-                    EditButton button = Instantiate(editButtonPrefab).GetComponent<EditButton>();
+                    EditButton button = Instantiate(editButtonPrefab, this.transform).GetComponent<EditButton>();
 
                     if (button != null)
                     {
@@ -124,7 +124,7 @@ namespace Assets.Scripts.DungeonBuilding
                         editButton.I = i;
                         editButton.J = j;
 
-                        editButton.transform.position = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
+                        editButton.transform.localPosition = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
                         editButton.transform.localScale = new Vector3(tileSize * 0.75f, 0.025f, tileSize * 0.75f);
                     }
                     else
@@ -282,7 +282,7 @@ namespace Assets.Scripts.DungeonBuilding
         {
             if (newTile == null) return;
 
-            newTile.transform.position = this.transform.position + new Vector3(i * tileSize, 0, j * tileSize);
+            newTile.transform.localPosition = new Vector3(i * tileSize, 0, j * tileSize);
             newTile.transform.localScale = new Vector3(tileSize, tileSize, tileSize);
         }
 

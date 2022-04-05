@@ -131,7 +131,7 @@ MonoBehaviour:
   focusIndividualCompoundCollider: 0
   inputActionsProfile: {fileID: 11400000, guid: 723eb97b02944311b92861f473eee53e, type: 2}
   inputActionRulesProfile: {fileID: 11400000, guid: 03945385d89102f41855bc8f5116b199, type: 2}
-  pointerProfile: {fileID: 11400000, guid: 48aa63a9725047b28d4137fd0834bc31, type: 2}
+  pointerProfile: {fileID: 11400000, guid: 82dbb50cbf9e5bb4b9daf9346ef56e74, type: 2}
   gesturesProfile: {fileID: 11400000, guid: 0864912968308fd4799600818bd9ac80, type: 2}
   speechCommandsProfile: {fileID: 11400000, guid: 986fa15d474d0c245a1df93ad1f6221a, type: 2}
   enableControllerMapping: 1

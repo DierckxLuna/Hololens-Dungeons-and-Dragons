@@ -25,14 +25,14 @@ namespace Assets.Scripts.DungeonBuilding
             if (north && south)
             {
                 door.SetActive(true);
-                door.transform.eulerAngles = new Vector3(0, 90, 0);
+                door.transform.localEulerAngles = new Vector3(0, 90, 0);
                 return;
             }
 
             if (east && west)
             {
                 door.SetActive(true);
-                door.transform.eulerAngles = new Vector3(0, 0, 0);
+                door.transform.localEulerAngles = new Vector3(0, 0, 0);
                 return;
             }
 

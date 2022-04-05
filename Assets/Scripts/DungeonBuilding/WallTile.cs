@@ -35,7 +35,11 @@ namespace Assets.Scripts.DungeonBuilding
             splitWall = Instantiate(splitWall, this.transform);
             intersectingWall = Instantiate(intersectingWall, this.transform);
 
+            lonelyWall.transform.localPosition = Vector3.zero;
+            normalWall.transform.localPosition = Vector3.zero;
             cornerWall.transform.localPosition = Vector3.zero;
+            splitWall.transform.localPosition = Vector3.zero;
+            intersectingWall.transform.localPosition = Vector3.zero;
 
             turnOffEverything();
         }
@@ -46,78 +50,78 @@ namespace Assets.Scripts.DungeonBuilding
 
             if (neighBours == 0)
             {
-                Activeate(this.lonelyWall);
+                Activate(this.lonelyWall);
             }
             else if (neighBours == 1)
             {
                 if (north || south)
                 {
-                    Activeate(normalWall);
-                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                    Activate(normalWall);
+                    normalWall.transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
                 else if (east || west)
                 {
-                    Activeate(normalWall);
-                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                    Activate(normalWall);
+                    normalWall.transform.localEulerAngles = new Vector3(0, 90, 0);
                 }
             }
             else if (neighBours == 2)
             {
                 if (north && south)
                 {
-                    Activeate(normalWall);
-                    normalWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                    Activate(normalWall);
+                    normalWall.transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
                 else if (east && west)
                 {
-                    Activeate(normalWall);
-                    normalWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                    Activate(normalWall);
+                    normalWall.transform.localEulerAngles = new Vector3(0, 90, 0);
                 }
                 else if (west && north)
                 {
-                    Activeate(cornerWall);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                    Activate(cornerWall);
+                    cornerWall.transform.localEulerAngles = new Vector3(0, 90, 0);
                 }
                 else if (north && east)
                 {
-                    Activeate(cornerWall);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 180, 0);
+                    Activate(cornerWall);
+                    cornerWall.transform.localEulerAngles = new Vector3(0, 180, 0);
                 }
                 else if (east && south)
                 {
-                    Activeate(cornerWall);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 270, 0);
+                    Activate(cornerWall);
+                    cornerWall.transform.localEulerAngles = new Vector3(0, 270, 0);
                 }
                 else
                 {
-                    Activeate(cornerWall);
-                    cornerWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                    Activate(cornerWall);
+                    cornerWall.transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
             }
             else if (neighBours == 3)
             {
-                Activeate(splitWall);
+                Activate(splitWall);
 
                 if (!west)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, 180, 0);
+                    splitWall.transform.localEulerAngles = new Vector3(0, 180, 0);
                 }
                 else if (!north)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, 270, 0);
+                    splitWall.transform.localEulerAngles = new Vector3(0, 270, 0);
                 }
                 else if (!east)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, 0, 0);
+                    splitWall.transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
                 else if (!south)
                 {
-                    splitWall.transform.eulerAngles = new Vector3(0, 90, 0);
+                    splitWall.transform.localEulerAngles = new Vector3(0, 90, 0);
                 }
             }
             else
             {
-                Activeate(intersectingWall);
+                Activate(intersectingWall);
             }
         }
 
@@ -130,7 +134,7 @@ namespace Assets.Scripts.DungeonBuilding
             intersectingWall.SetActive(false);
         }
 
-        private void Activeate(GameObject gameObject)
+        private void Activate(GameObject gameObject)
         {
             activeGameObject?.SetActive(false);
 
